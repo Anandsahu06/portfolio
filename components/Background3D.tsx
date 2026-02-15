@@ -49,7 +49,7 @@ const Galaxy = () => {
         return { pos, colors };
     }, []);
 
-    useFrame((state) => {
+    useFrame(() => {
         if (!pointsRef.current) return;
 
         // Continuous rotation
@@ -73,15 +73,11 @@ const Galaxy = () => {
             <bufferGeometry>
                 <bufferAttribute
                     attach="attributes-position"
-                    count={particleCount}
-                    array={positions.pos}
-                    itemSize={3}
+                    args={[positions.pos, 3]}
                 />
                 <bufferAttribute
                     attach="attributes-color"
-                    count={particleCount}
-                    array={positions.colors}
-                    itemSize={3}
+                    args={[positions.colors, 3]}
                 />
             </bufferGeometry>
             <PointMaterial
@@ -97,10 +93,17 @@ const Galaxy = () => {
 };
 
 // --- Floating Tech Objects ---
-const FloatingObject = ({ geometry, position, speed, rotationSpeed }: any) => {
+interface FloatingObjectProps {
+    geometry: React.ReactNode;
+    position: [number, number, number];
+    speed: number;
+    rotationSpeed: [number, number, number];
+}
+
+const FloatingObject = ({ geometry, position, speed, rotationSpeed }: FloatingObjectProps) => {
     const meshRef = useRef<THREE.Mesh>(null);
 
-    useFrame((state) => {
+    useFrame(() => {
         if (!meshRef.current) return;
         meshRef.current.rotation.x += rotationSpeed[0];
         meshRef.current.rotation.y += rotationSpeed[1];
@@ -173,7 +176,7 @@ const Background3D = () => {
                     </Text>
                 </Float>
 
-                <EffectComposer disableNormalPass>
+                <EffectComposer>
                     <Bloom luminanceThreshold={0.2} mipmapBlur intensity={1.5} radius={0.4} />
                     <Noise opacity={0.05} />
                     <Vignette eskil={false} offset={0.1} darkness={1.1} />
