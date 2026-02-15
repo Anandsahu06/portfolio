@@ -9,8 +9,11 @@ import LoadingAnimation from "@/components/LoadingAnimation";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "Premium 3D Portfolio | Web & AI Developer",
-    description: "Modern 3D developer portfolio built with Next.js, Three.js, and Framer Motion.",
+    title: "Anand Kand Sahu — SaaS & AI Developer",
+    description: "Freelance developer building SaaS tools, AI web apps and automation systems for startups and creators.",
+    icons: {
+        icon: "/favicon.svg",
+    },
 };
 
 export default function RootLayout({
